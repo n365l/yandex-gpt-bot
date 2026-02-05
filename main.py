@@ -1,6 +1,10 @@
 import os
 import telebot
 import requests
+from flask import Flask, request
+
+# Создаем Flask приложение
+app = Flask(__name__)
 
 # Получаем переменные из окружения Railway
 TELEGRAM_TOKEN = os.environ.get("TELEGRAM_TOKEN")
@@ -60,8 +64,29 @@ def handle_message(message):
     answer = ask_yandex_gpt(message.text)
     bot.reply_to(message, answer)
 
-# Запуск бота
+# Вебхук для Railway
+@app.route('/webhook', methods=['POST'])
+def webhook():
+    if request.headers.get('content-type') == 'application/json':
+        json_string = request.get_data().decode('utf-8')
+        update = telebot.types.Update.de_json(json_string)
+        bot.process_new_updates([update])
+        return 'OK', 200
+    else:
+        return 'Bad Request', 400
+
+@app.route('/')
+def index():
+    return '🤖 Бот работает на Railway!'
+
+# Запуск
 if __name__ == "__main__":
-    print("✅ Бот запускается в Railway...")
-    bot.infinity_polling()
+    # Устанавливаем вебхук при запуске
+    bot.remove_webhook()
+    # URL получим после генерации домена
+    bot.set_webhook(url="https://yandex-gpt-bot.up.railway.app/webhook")
+    
+    # Запускаем Flask на порту 8080
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
 
