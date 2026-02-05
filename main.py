@@ -110,7 +110,7 @@ def index():
     return '🤖 Бот работает на Railway!'
 
 # Запуск
-if name == "__main__":
+if __name__ == "__main__":
     # Проверяем все ли переменные есть
     if not TELEGRAM_TOKEN:
         print("⚠️  ВНИМАНИЕ: TELEGRAM_TOKEN отсутствует!")
@@ -122,3 +122,4 @@ if name == "__main__":
     port = int(os.environ.get("PORT", 8080))
     print(f"🚀 Сервер запускается на порту {port}")
     app.run(host='0.0.0.0', port=port)
+
