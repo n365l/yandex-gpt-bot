@@ -61,6 +61,7 @@ def handle_message(message):
     bot.reply_to(message, answer)
 
 # Запуск бота
-if name == "__main__":
+if __name__ == "__main__":
     print("✅ Бот запускается в Railway...")
     bot.infinity_polling()
+
