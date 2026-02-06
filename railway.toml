@@ -1,11 +1,1 @@
-[build]
-builder = "NIXPACKS"
 
-[deploy]
-startCommand = "python main.py"
-
-[variables]
-TELEGRAM_TOKEN = "8296790244:AAEu-Bi5ZA7AwQAjyeAHL2kMcS4mrLwFR5U"
-YANDEX_API_KEY = "AQVN0Rbj9WArAG5JyZtynrC6o9RkEw2fIIZVsHsZ"
-FOLDER_ID = "b1gnqesu7v521unserv8"
-PORT = "8080"
